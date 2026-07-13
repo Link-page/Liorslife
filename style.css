@@ -99,6 +99,7 @@ body {
     gap: 16px;
 }
 
+/* עיצוב כפתור כללי - נקי ויוקרתי */
 .link-btn {
     display: flex;
     align-items: center;
@@ -107,14 +108,21 @@ body {
     text-decoration: none;
     color: white;
     font-weight: 500;
-    transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
     position: relative;
     overflow: hidden;
+    
+    /* רקע כהה אחיד ופס צדדי ששואב את הצבע מהמשתנה */
+    background-color: #0f0f0f;
+    border: 1px solid #222;
+    border-left: 4px solid var(--btn-color);
+    
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
 .link-btn:hover {
     transform: scale(1.03);
-    filter: brightness(1.15);
+    background-color: var(--btn-bg-hover);
+    box-shadow: 0 0 15px var(--btn-bg-hover);
 }
 
 .btn-text {
@@ -127,57 +135,39 @@ body {
 .icon-right {
     font-size: 1.6rem;
     width: 35px;
+    /* מושך את הצבע הייחודי של הפלטפורמה לאייקון */
+    color: var(--btn-color); 
 }
 
-/* סגנונות לכפתורים */
+/* ================================================= */
+/* הגדרת משתני צבע לכל פלטפורמה */
+/* ================================================= */
+
 .kick {
-    background: #002d11;
-    border: 1px solid #53fc18;
-    box-shadow: 0 0 10px rgba(83, 252, 24, 0.1);
-}
-
-.kick:hover {
-    box-shadow: 0 0 20px rgba(83, 252, 24, 0.3);
-}
-
-.kick .icon-right {
-    color: #53fc18;
-}
-
-.youtube {
-    background: linear-gradient(90deg, #4a0000, #8b0000);
-    border: 1px solid #ff0000;
-}
-
-.youtube:hover {
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-}
-
-.tiktok {
-    background: linear-gradient(90deg, #111111, #333333);
-    border: 1px solid #00f2fe;
-}
-
-.tiktok:hover {
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    --btn-color: #53fc18;
+    --btn-bg-hover: rgba(83, 252, 24, 0.15);
+    /* דגש אקסטרה לערוץ הראשי */
+    border: 1px solid rgba(83, 252, 24, 0.3);
 }
 
 .discord {
-    background: linear-gradient(90deg, #5865F2, #7c85f5);
+    --btn-color: #5865F2;
+    --btn-bg-hover: rgba(88, 101, 242, 0.15);
 }
 
-/* כפתור הדיסקורד מסמכים שעשינו מקודם */
-.discord-doc {
-    background: linear-gradient(90deg, #1e1f22, #2b2d31);
-    border: 1px solid #5865F2;
+.youtube {
+    --btn-color: #ff0000;
+    --btn-bg-hover: rgba(255, 0, 0, 0.15);
 }
 
-.discord-doc:hover {
-    box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+.tiktok {
+    --btn-color: #00f2fe;
+    --btn-bg-hover: rgba(0, 242, 254, 0.15);
 }
 
 .instagram {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --btn-color: #e6683c;
+    --btn-bg-hover: rgba(230, 104, 60, 0.15);
 }
 
 .badge {
