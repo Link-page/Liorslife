@@ -278,18 +278,16 @@
     .card:hover::after,
     .lb-card:hover::after { right: 120%; }
 
-    /* הוחזר לעיצוב הכפתורים המלבניים המקורי */
     .card-inner {
-      position: relative;
-      z-index: 3;
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(8, 12, 20, 0.78), rgba(10, 5, 18, 0.68));
-      min-height: 80px;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px 22px;
-      overflow: hidden;
+      padding: 16px;
+      gap: 12px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(8, 12, 20, 0.78), rgba(10, 5, 18, 0.68));
     }
 
     .lb-inner {
@@ -313,12 +311,10 @@
       z-index: 4;
     }
 
-    /* הוחזר לעיצוב האייקון בצד ימין */
     .icon-box {
-      position: absolute;
-      right: 22px;
-      width: 48px;
-      height: 48px;
+      position: relative;
+      width: 54px;
+      height: 54px;
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -338,14 +334,14 @@
     }
 
     .card-title {
-      font-size: 1.35rem;
-      line-height: 1.2;
+      font-size: 1rem;
+      line-height: 1.25;
       font-weight: 900;
     }
 
     .platform-icon {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
@@ -355,8 +351,8 @@
     }
 
     .status-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
       display: inline-block;
     }
@@ -409,9 +405,7 @@
     
     @media (max-width: 520px) {
       #main-page-content { padding-top: 40px !important; }
-      .card-inner { min-height: 72px; padding: 14px 17px; }
-      .icon-box { right: 17px; width: 44px; height: 44px; border-radius: 12px; }
-      .card-title { font-size: 1.2rem; } 
+      .card-title { font-size: 0.95rem; } 
       #profile-image-container { width: 124px; height: 124px; }
       .pill-menu { gap: 0.5rem; padding: 8px 12px; border-radius: 24px; }
       .pill-btn { font-size: 0.75rem; padding: 4px 8px; }
@@ -423,7 +417,21 @@
     #main-page-content { opacity: 0; visibility: hidden; transition: opacity 0.42s ease-in, transform 0.42s ease; transform: translateY(18px) scale(0.985); min-height: 100vh; justify-content: flex-start; padding-top: 58px !important; padding-bottom: 40px !important; width: 100%; }
     #main-page-content.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 
-    .site-footer { margin-top: 60px; padding: 30px 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); background: rgba(10, 10, 15, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 10; }
+    /* התיקון לפוטר - ללא רקע שחור או גבול */
+    .site-footer { 
+      margin-top: 60px; 
+      padding: 30px 20px; 
+      background: transparent; 
+      border: none; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      text-align: center; 
+      position: relative; 
+      z-index: 10; 
+    }
+    
     .footer-copy { color: rgba(255, 255, 255, 0.9); font-size: 1rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
 
     /* נגישות */
@@ -482,27 +490,41 @@
       </nav>
     </div>
 
-    <!-- View 1: Home (מלבנים רחבים) -->
+    <!-- View 1: Home -->
     <section id="view-home" class="view-section active w-full relative z-10">
-      <div class="space-y-4 max-w-[430px] mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-[800px] mx-auto w-full px-2" dir="rtl">
         
         <!-- Kick -->
-        <a href="https://kick.com/liorslife" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <a href="https://kick.com/liorslife" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.svg" class="platform-icon" alt="Kick">
             </div>
             <div class="card-content">
               <div class="card-title text-[#53fc18]">Kick</div>
-              <div id="kick-live-status" class="mt-1 text-xs font-black flex items-center justify-center gap-2 status-offline" dir="ltr">
+              <div id="kick-live-status" class="mt-2 text-[0.65rem] font-black flex items-center justify-center gap-1 status-offline" dir="ltr">
                 <span class="status-dot"></span><span class="status-text">Checking...</span>
               </div>
             </div>
           </div>
         </a>
 
+        <!-- PayPal (הוסף מחדש לפי הבקשה) -->
+        <a href="https://streamelements.com/liorslife/tip" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
+          <div class="card-inner">
+            <div class="icon-box">
+              <img src="paypal.png" class="platform-icon" alt="PayPal">
+            </div>
+            <div class="card-content">
+              <div class="card-title text-[#0079C1]">
+                PayPal<br><span class="text-[0.8rem] font-normal text-[#0079C1]/80 block mt-1">תרומות</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
         <!-- Discord -->
-        <a href="https://discord.gg/7xk3NprCCq" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <a href="https://discord.gg/7xk3NprCCq" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <svg class="platform-icon text-[#5865F2]" viewBox="0 0 127.14 96.36" fill="currentColor">
@@ -516,7 +538,7 @@
         </a>
 
         <!-- YouTube Clips -->
-        <a href="https://www.youtube.com/@LiorsLifeLive" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <a href="https://www.youtube.com/@LiorsLifeLive" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <svg class="platform-icon text-red-500" viewBox="0 0 24 24" fill="currentColor">
@@ -532,7 +554,7 @@
         </a>
 
         <!-- YouTube Main -->
-        <a href="https://www.youtube.com/@LiorsLife" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <a href="https://www.youtube.com/@LiorsLife" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <svg class="platform-icon text-red-500" viewBox="0 0 24 24" fill="currentColor">
@@ -548,7 +570,7 @@
         </a>
 
         <!-- Instagram -->
-        <a href="https://www.instagram.com/liors.life" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <a href="https://www.instagram.com/liors.life" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <svg class="platform-icon" viewBox="0 0 24 24" fill="none">
@@ -573,8 +595,8 @@
           </div>
         </a>
 
-        <!-- TikTok (Personal - Only one left) -->
-        <a href="https://www.tiktok.com/@liorlifshiz1" target="_blank" rel="noopener noreferrer" class="card animated-item">
+        <!-- TikTok Personal -->
+        <a href="https://www.tiktok.com/@liorlifshiz1" target="_blank" rel="noopener noreferrer" class="card animated-item aspect-square">
           <div class="card-inner">
             <div class="icon-box">
               <svg class="platform-icon text-white" viewBox="0 0 24 24" fill="currentColor">
@@ -652,7 +674,7 @@
       </div>
     </section>
 
-    <!-- פוטר נקי -->
+    <!-- פוטר נקי - ללא הפס השחור -->
     <footer class="site-footer w-full">
       <div class="footer-copy">© 2026 LiorsLife</div>
       <button onclick="openA11yModal()" class="text-white/40 hover:text-white/80 transition-colors text-xs font-bold uppercase tracking-widest cursor-pointer outline-none mt-2">
@@ -894,21 +916,24 @@
       }
     });
 
+    // תיקון למערכת קיק - תמיד יחזיר Offline במקרה של חסימה במקום להיתקע
     async function checkKickLiveStatus() {
+      const kickElem = document.getElementById('kick-live-status');
       try {
         const res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://kick.com/api/v2/channels/liorslife'), { cache: 'no-store' });
-        const kickElem = document.getElementById('kick-live-status');
         if (res.ok) {
           const data = await res.json();
           const isLive = Boolean(data?.livestream?.is_live || data?.recent_livestream?.is_live || data?.current_livestream?.is_live || (data?.livestream && data.livestream.is_live !== false));
-          kickElem.className = isLive ? 'mt-1 text-xs font-black flex items-center justify-center gap-2 status-live' : 'mt-1 text-xs font-black flex items-center justify-center gap-2 status-offline';
+          kickElem.className = isLive ? 'mt-2 text-[0.65rem] font-black flex items-center justify-center gap-1 status-live' : 'mt-2 text-[0.65rem] font-black flex items-center justify-center gap-1 status-offline';
           kickElem.querySelector('.status-text').textContent = isLive ? 'on Live' : 'offline';
         } else {
-          kickElem.className = 'mt-1 text-xs font-black flex items-center justify-center gap-2 status-offline';
+          kickElem.className = 'mt-2 text-[0.65rem] font-black flex items-center justify-center gap-1 status-offline';
           kickElem.querySelector('.status-text').textContent = 'offline';
         }
       } catch (e) {
         console.error("Kick API Error", e);
+        kickElem.className = 'mt-2 text-[0.65rem] font-black flex items-center justify-center gap-1 status-offline';
+        kickElem.querySelector('.status-text').textContent = 'offline';
       }
     }
     
