@@ -219,6 +219,7 @@
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* עיצוב הכרטיס (כפתור) הבסיסי */
     .card,
     .lb-card {
       position: relative;
@@ -267,6 +268,7 @@
       pointer-events: none;
     }
 
+    /* מצב ריחוף (Hover) */
     .card:hover,
     .lb-card:hover {
       border-color: rgba(0, 240, 255, 0.6);
@@ -278,7 +280,14 @@
     .card:hover::after,
     .lb-card:hover::after { right: 120%; }
 
-    /* העיצוב המלבני המקורי */
+    /* מצב לחיצה (Active) - הופך את הלחיצה לראליסטית */
+    .card:active {
+      transform: translateY(4px) scale(0.97) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 3px 12px rgba(0, 0, 0, 0.8) !important;
+      transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      border-color: rgba(0, 240, 255, 0.2) !important;
+    }
+
     .card-inner {
       position: relative;
       z-index: 3;
@@ -313,7 +322,6 @@
       z-index: 4;
     }
 
-    /* העיצוב המקורי של האייקון בצד ימין */
     .icon-box {
       position: absolute;
       right: 22px;
@@ -339,7 +347,7 @@
 
     .card-title {
       font-size: 1.35rem;
-      line-height: 1;
+      line-height: 1.2;
       font-weight: 900;
     }
 
@@ -395,6 +403,8 @@
 
     .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(20, 25, 40, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(12px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); color: rgba(255, 255, 255, 0.8); outline: none; }
     .nav-arrow:hover { background: rgba(255, 255, 255, 0.15); color: #ffffff; border-color: rgba(0, 240, 255, 0.5); box-shadow: 0 0 20px rgba(0, 240, 255, 0.35); }
+    .nav-arrow:active { transform: translateY(-50%) scale(0.85) !important; transition: all 0.1s !important; }
+    
     .left-arrow { left: -90px; }
     .right-arrow { right: -90px; }
 
@@ -423,7 +433,6 @@
     #main-page-content { opacity: 0; visibility: hidden; transition: opacity 0.42s ease-in, transform 0.42s ease; transform: translateY(18px) scale(0.985); min-height: 100vh; justify-content: flex-start; padding-top: 58px !important; padding-bottom: 40px !important; width: 100%; }
     #main-page-content.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 
-    /* התיקון לפוטר - ללא רקע שחור או גבול */
     .site-footer { 
       margin-top: 60px; 
       padding: 30px 20px; 
@@ -515,10 +524,15 @@
           </div>
         </a>
 
-        <!-- PayPal (תמונה בלבד, ממורכזת וללא טקסט) -->
+        <!-- PayPal (העיצוב האחיד עם התמונה במקום הנכון) -->
         <a href="https://streamelements.com/liorslife/tip" target="_blank" rel="noopener noreferrer" class="card animated-item">
-          <div class="card-inner" style="justify-content: center;">
-            <img src="paypal.png" alt="PayPal" class="h-12 w-auto object-contain transition-transform duration-300 hover:scale-110">
+          <div class="card-inner">
+            <div class="icon-box">
+              <img src="paypal.png" class="platform-icon" alt="PayPal">
+            </div>
+            <div class="card-content">
+              <div class="card-title text-[#0079C1]">PayPal</div>
+            </div>
           </div>
         </a>
 
