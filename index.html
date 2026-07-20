@@ -109,6 +109,46 @@
       opacity: 0.82;
     }
 
+    /* עין ההשגחה - הרקע מבוסס על BG.png, עם עין שעוקבת אחרי העכבר */
+    #illuminati-bg-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    #illuminati-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0.5;
+    }
+
+    #illuminati-mask,
+    #illuminati-pupil {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #illuminati-mask {
+      background: radial-gradient(circle, rgba(141, 145, 146, 0.95) 0%, rgba(141, 145, 146, 0.85) 55%, rgba(141, 145, 146, 0) 100%);
+      filter: blur(2px);
+      opacity: 0.5;
+    }
+
+    #illuminati-pupil {
+      background: radial-gradient(circle at 35% 30%, #4a4a4a 0%, #0c0c0c 55%, #000000 100%);
+      opacity: 0.5;
+      transition: transform 0.05s linear;
+    }
+
     .main-shell {
       position: relative;
       z-index: 3;
@@ -478,6 +518,12 @@
   <video id="watermark-bg" src="Comp_1_1.webm" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture></video>
   <canvas id="particles-canvas"></canvas>
   <div id="spotlight"></div>
+
+  <div id="illuminati-bg-wrap" aria-hidden="true">
+    <img id="illuminati-bg-img" src="BG.png" alt="">
+    <div id="illuminati-mask"></div>
+    <div id="illuminati-pupil"></div>
+  </div>
 
   <div id="splash-screen">
     <video id="splash-video" src="intro.webm" autoplay muted playsinline webkit-playsinline disablePictureInPicture preload="auto"></video>
@@ -948,6 +994,65 @@
     
     checkKickLiveStatus();
     setInterval(checkKickLiveStatus, 60000);
+
+    // ==========================================
+    // Illuminati Eye - tracks the mouse over BG.png
+    // ==========================================
+    (function () {
+      const bgImg = document.getElementById('illuminati-bg-img');
+      const mask = document.getElementById('illuminati-mask');
+      const pupil = document.getElementById('illuminati-pupil');
+      if (!bgImg || !mask || !pupil) return;
+
+      // Coordinates measured directly on BG.png (natural size 2668x4000)
+      const IMG_W = 2668;
+      const IMG_H = 4000;
+      const EYE_X = 1298;
+      const EYE_Y = 1428;
+      const PUPIL_R = 11;
+      const MASK_R = 15;
+      const MOVE_X = 9;
+      const MOVE_Y = 5;
+
+      let eyeScreenX = 0, eyeScreenY = 0, scale = 1, ready = false;
+
+      function layout() {
+        const cw = bgImg.clientWidth, ch = bgImg.clientHeight;
+        if (!cw || !ch) return;
+        const iw = bgImg.naturalWidth || IMG_W;
+        const ih = bgImg.naturalHeight || IMG_H;
+        scale = Math.min(cw / iw, ch / ih);
+        const renderW = iw * scale, renderH = ih * scale;
+        const rect = bgImg.getBoundingClientRect();
+        const offsetX = rect.left + (cw - renderW) / 2;
+        const offsetY = rect.top + (ch - renderH) / 2;
+
+        eyeScreenX = offsetX + EYE_X * scale;
+        eyeScreenY = offsetY + EYE_Y * scale;
+
+        const maskD = MASK_R * 2 * scale;
+        const pupilD = PUPIL_R * 2 * scale;
+        mask.style.width = mask.style.height = maskD + 'px';
+        mask.style.transform = `translate(${eyeScreenX - maskD / 2}px, ${eyeScreenY - maskD / 2}px)`;
+        pupil.style.width = pupil.style.height = pupilD + 'px';
+        pupil.style.transform = `translate(${eyeScreenX - pupilD / 2}px, ${eyeScreenY - pupilD / 2}px)`;
+        ready = true;
+      }
+
+      function trackPupil(e) {
+        if (!ready) return;
+        const angle = Math.atan2(e.clientY - eyeScreenY, e.clientX - eyeScreenX);
+        const dx = Math.cos(angle) * MOVE_X * scale;
+        const dy = Math.sin(angle) * MOVE_Y * scale;
+        const pupilD = PUPIL_R * 2 * scale;
+        pupil.style.transform = `translate(${eyeScreenX - pupilD / 2 + dx}px, ${eyeScreenY - pupilD / 2 + dy}px)`;
+      }
+
+      if (bgImg.complete && bgImg.naturalWidth) layout();
+      bgImg.addEventListener('load', layout);
+      window.addEventListener('resize', layout);
+      document.addEventListener('mousemove', trackPupil);
+    })();
 
     // ==========================================
     // Accessibility Functions
