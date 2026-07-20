@@ -21,6 +21,7 @@ jobs:
         env:
           KICK_CLIENT_ID: ${{ secrets.KICK_CLIENT_ID }}
           KICK_CLIENT_SECRET: ${{ secrets.KICK_CLIENT_SECRET }}
+          KICK_REFRESH_TOKEN: ${{ secrets.KICK_REFRESH_TOKEN }}
         run: python fetch_kick_data.py
       - name: Commit and Push changes
         run: |
