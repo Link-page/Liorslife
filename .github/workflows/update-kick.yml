@@ -1,37 +1,32 @@
 name: Update Kick Data
-
 on:
   schedule:
     - cron: '*/10 * * * *' # רץ כל 10 דקות אוטומטית
   workflow_dispatch: # מאפשר לך להריץ גם ידנית בלחיצת כפתור ב-GitHub
-
 jobs:
   update-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
       - name: Install dependencies
         run: pip install requests
-
       - name: Fetch Kick API Data
         env:
-          KICK_API_KEY: ${{ secrets.KICK_API_KEY }}
+          KICK_CLIENT_ID: ${{ secrets.KICK_CLIENT_ID }}
+          KICK_CLIENT_SECRET: ${{ secrets.KICK_CLIENT_SECRET }}
         run: python fetch_kick_data.py
-
       - name: Commit and Push changes
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
-          git add live_status.json leaderboard.json subs.json
+          git add live_status.json leaderboard.json || true
           git commit -m "Auto-update Kick data" || exit 0
           git push
+ 
